@@ -16,7 +16,8 @@ Ext.application({
     requires: [
         'Ext.MessageBox',
         'Ext.List',
-        'MyApp.model.TasksCount'
+        'MyApp.model.TasksCount',
+        'MyApp.model.TaskListItemModel'
     ],
 
     views: [

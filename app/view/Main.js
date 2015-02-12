@@ -1,7 +1,6 @@
 var listStore = Ext.create('Ext.data.Store', {
     storeId: 'TaskStore',
-    fields: ['name', 'done', 'number'],
-    data: []
+    model: 'MyApp.model.TaskListItemModel'
 });
 
 var addBtn = Ext.create('Ext.Button', {
@@ -91,7 +90,6 @@ var textfield = Ext.create('Ext.field.Text',{
         flex: 1,
         placeHolder: 'Add task...',
         listeners: {
-            scope: this,
             keyup: function(field, evOpt) {
                 var valueLength = field.getValue().length;
                 if(addBtn.isDisabled() && valueLength > 0){
@@ -199,7 +197,8 @@ Ext.define('MyApp.view.Main', {
         'Ext.field.Text',
         'Ext.Button',
         'Ext.Label',
-        'MyApp.model.TasksCount'
+        'MyApp.model.TasksCount',
+        'MyApp.model.TaskListItemModel'
     ],
     config: {
         layout: 'fit',
