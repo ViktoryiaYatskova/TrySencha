@@ -12,23 +12,13 @@ Ext.define('MyApp.view.TaskListItem', {
   config: {
     layout: 'hbox',
     itemId: 'task-list-item',
-    bubbleEvents: ['change', 'tap', 'changeCheckCount'],
-    listeners:[{
-        element: 'element',
-        change: function(){debugger;},
-        delegate: '#mark-btn'
-      },{
-      element: 'element',
-      tap: function(){debugger;},
-      delegate: '#delete-btn'
-    }
-    ],
+    cls: 'task-list-item',
     items: [
       {
         xtype: 'checkboxfield',
         itemId: 'mark-btn',
         cls: 'mark-btn',
-        bubbleEvents: ['change', 'changeCheckCount'],
+        bubbleEvents: ['change'],
         flex: 0
       }, {
         xtype: 'component',
@@ -44,51 +34,27 @@ Ext.define('MyApp.view.TaskListItem', {
 
     control: {
       '#mark-btn': {
-        change: function(){
-          var record = this.getRecord(),
-              checkAll;
-          record.set('done', !record.get('done')); //using set-function causes generation of new event for checkbox
-          //record.data.done ? this.up().fireEvent('changeCheckCount', false) : this.up().fireEvent('changeCheckCount', true);
-
-          debugger;
-          this.fireEvent('changeCheckCount', false);
-          this.up().fireEvent('changeCheckCount', false);
-
-          //list.refresh();
-
-          //var checkAllBtn = this.up('#check-all-btn');
-          //if (checkAllBtn.isDisabled()) checkAllBtn.enable();
-          return true;
+        change: function(elem, value){
+          var record = this.getRecord();
+          record.set('done', value); //using set-function causes generation of new event for checkbox
         }
       },
       '#delete-btn': {
-        tap: function(){
-          var record = this.getRecord();
-
-          if (!record.get('done'))
-            this.up().fireEvent('changeCheckCount', false);
-
-          //this.up().getStore().remove(record);
-          //list.refresh();
+        tap: function(elem, event){
+          event.record = this.getRecord();
+          this.parent.remove(this);
         }
       }
     }
   },
-
   updateRecord: function(record, newRecord, eOpts){
-    this.callParent(record, newRecord, eOpts);
-    var newDoneVal = (newRecord||record).get('done'),
-        newNameVal = (newRecord||record).get('name');
+    debugger;
+    this.callParent.apply(this, Array.prototype.splice.call(arguments));
+    var markBtn = this.child('#mark-btn'), nameField = this.child('#task-name');
 
-    if(newDoneVal != record.get('done'))
-      this.down('#mark-btn').setValue(newDoneVal);
-
-    this.down('#task-name').setHtml(newNameVal);
-
-    return false;
-  },
-
-  checkTask: function(){
-
+    if(record && !nameField.getHtml()) {
+      nameField.setHtml(record.get('name'));
+      markBtn.setValue(record.get('done'));
+    }
   }
 });

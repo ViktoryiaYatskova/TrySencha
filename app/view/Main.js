@@ -76,7 +76,7 @@ Ext.define('MyApp.view.Main', {
         ]
       },{
         xtype: 'task-list',
-        itemId: 'task-list',
+        id: 'task-list',
         store: Ext.create('Ext.data.Store', {
           storeId: 'TaskStore',
           model: 'MyApp.model.TaskListItemModel'

@@ -19,6 +19,9 @@
 .mark-btn.x-field .x-field-input {
     min-width: 0;
 }
+.task-list-item {
+    background-color: white;
+}
 
 /*input:checked::after {
   content: "3";
@@ -36,12 +39,13 @@
   width: 35px;
   height: 35px;
   padding: 5px;
-  background-image: url('../icons/delete.png');
   border: 1px solid #ECD4CE;
   border-radius: 20px;
   background-size: 25px;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: white;
+  background-image: url('../icons/delete.png');
 }
 .delete-btn:active {
   background-color: #ECD4CE;

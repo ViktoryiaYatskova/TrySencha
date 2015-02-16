@@ -12,26 +12,25 @@ Ext.define('MyApp.controller.Main', {
       checkAllBtn: '#check-all-btn',
       deleteAllBtn: '#delete-all-btn',
       taskList: '#task-list',
-      taskListItem: '#task-list-item',
 
       showAllBtn: '#show-all-btn',
       showCompleteBtn: '#show-complete-btn',
       showActiveBtn: '#show-active-btn',
-
-      checkTask: '#mark-btn',
-      deleteTask: '#delete-btn'
     },
+    models: ['MyApp.view.TaskListItem'],
     control: {
       addBtn: {
         tap: 'onAddBtn'
       },
-      checkAllBtn: 'onCheckAllBtn',
+      checkAllBtn:{
+        tap: 'onCheckAllBtn'
+      },
       taskField: {
         keyup: 'onTaskField'
       },
       deleteAllBtn: {
         tap: function (elem) { //removing all items of list
-          var checkAllBtn = getCheckAllBtn(),
+          var checkAllBtn = this.getCheckAllBtn(),
               list = this.getTaskList(),
               listStore = list.getStore();
 
@@ -48,7 +47,7 @@ Ext.define('MyApp.controller.Main', {
             this.changeCheckCount(false, listStore.getCount());
 
           elem.disable();
-          checkAllBtn.disable();
+          this.checkAllBtn.disable();
         }
       },
       showAllBtn: {
@@ -61,7 +60,7 @@ Ext.define('MyApp.controller.Main', {
           this.getShowActiveBtn.enable();
 
           if(listStore.getAllCount() > listStore.getCount())
-            this.activateEditBtn(deleteBtn, getCheckAllBtn());
+            this.activateEditBtn(deleteBtn, this.getCheckAllBtn());
           else
             this.activateEditBtn(deleteBtn);
 
@@ -79,7 +78,7 @@ Ext.define('MyApp.controller.Main', {
           listStore.clearFilter();
           listStore.filter(completeFltr);
 
-          this.activateEditBtn(getDeleteAllBtn());
+          this.activateEditBtn(this.getDeleteAllBtn());
           this.getCheckAllBtn().disable();
         }
       },
@@ -93,44 +92,36 @@ Ext.define('MyApp.controller.Main', {
 
           listStore.clearFilter();
           listStore.filter(activeFltr);
-          this.activateEditBtn(getDeleteAllBtn(), getCheckAllBtn());
+          this.activateEditBtn(this.getDeleteAllBtn(), this.getCheckAllBtn());
         }
-      },
-      taskListItem: {
-        changeCheckCount: 'changeCheckCount',
-        change: 'changeCheckCount',
-        itemsingletap: 'changeCheckCount'
       },
       taskList: {
-        changeCheckCount: 'changeCheckCount',
-        change: 'changeCheckCount'
-      }/*,
-      checkTask: {
-        change: function(){
-          var record = this.getRecord(),
-            checkAllBtn = this.getCheckAllBtn();
-
-          record.set('done', !record.get('done')); //using set-function causes generation of new event for checkbox
-          record.data.done ? this.changeCheckCount(false) : this.changeCheckCount(true);
-          this.getTaskList().refresh();
-
-           if (checkAllBtn.isDisabled()) checkAllBtn.enable();
-        }
-      },
-      deleteBtn: {
-        tap: function(){
-          debugger;
-          var record = this.getRecord(),
-              list = this.getTaskList();
-
-          if (!record.get('done'))
-            this.changeCheckCount(false);
-
-          list.getStore().remove(record);
-          list.refresh();
-        }
-      }*/
+        change: 'onCheckTask',
+        tap: 'onDeleteTask'
+      }
     }
+  },
+
+  onDeleteTask: function(element, event){
+    var record = event.record,
+        list = this.getTaskList(),
+        listStore = list.getStore();
+
+    if(!record) {
+      return;
+    }
+
+    this.changeCheckCount(false);
+    listStore.remove(record);
+    list.refresh();
+  },
+
+  onCheckTask: function(checkBox, value){
+    this.changeCheckCount(!value);
+    //this.getTaskList().refresh();
+
+    var checkAllBtn = this.getCheckAllBtn();
+    if (checkAllBtn.isDisabled()) checkAllBtn.enable();
   },
 
   onAddBtn: function(){
@@ -190,7 +181,7 @@ Ext.define('MyApp.controller.Main', {
 
     increment? countRecord.increaseCount():
        newCount? countRecord.setCount(newCount):
-        countRecord.decreaseCount()
+        countRecord.decreaseCount();
   },
 
   activateEditBtn: function(){
@@ -202,17 +193,18 @@ Ext.define('MyApp.controller.Main', {
         if(button.isDisabled())
           button.enable();
     });
-  }
-});
-//Filters
-var completeFltr = Ext.create('Ext.util.Filter', {
-  filterFn: function(item) {
-    return item.get('done');
-  }
-});
+  },
 
-var activeFltr = Ext.create('Ext.util.Filter', {
-  filterFn: function(item) {
-    return !item.get('done');
-  }
+  completeFltr: Ext.create('Ext.util.Filter', {
+    filterFn: function(item) {
+      return item.get('done');
+    }
+  }),
+
+  activeFltr: Ext.create('Ext.util.Filter', {
+    filterFn: function (item) {
+      return !item.get('done');
+    }
+  })
+
 });
