@@ -1021,6 +1021,7 @@
       <root url="file://D:/Install/sencha-touch-2.4.1/sencha-touch.js" />
       <root url="file://D:/Install/sencha-touch-2.4.1/sencha-touch-all.js" />
     </CLASSES>
+    <JAVADOC />
     <SOURCES>
       <root url="file://D:/Install/sencha-touch-2.4.1/src/fx/easing/Bounce.js" />
       <root url="file://D:/Install/sencha-touch-2.4.1/src/fx/easing/EaseIn.js" />

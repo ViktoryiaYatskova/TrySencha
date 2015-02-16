@@ -16,7 +16,7 @@ Ext.define('MyApp.controller.Main', {
       taskField: 'textfield',
       activeTaskCountLabel: 'label',
 
-      checkBtn: 'checkboxfield[cls="mark-btn"]',
+      checkBtn: 'checkboxfield',
       deleteBtn: 'button[action="delete-task"]',
 
       checkAllBtn: 'button[action="check-all"]',
@@ -85,15 +85,13 @@ Ext.define('MyApp.controller.Main', {
 
   onDeleteTask: function (element){
     var record = element.getRecord();
-    debugger;
     Ext.getStore('TaskStore').remove(record);
-    this.getTaskList().getStore().remove(record);
 
     this.changeCheckCount(false);
+    this.getTaskList().refresh();
   },
 
   onCheckTask: function (elem, value){
-    console.log(this);
     var record = elem.getRecord();
     record.set('done', value);
     this.changeCheckCount(!value);
@@ -144,9 +142,9 @@ Ext.define('MyApp.controller.Main', {
     this.getCheckAllBtn().disable();
   },
 
-  onAddBtn: function(){
+  onAddBtn: function(elem){
     this.addTask();
-    this.disable();
+    elem.disable();
   },
 
   onTaskField: function(field, evOpt){

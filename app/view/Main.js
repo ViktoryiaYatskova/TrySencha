@@ -76,6 +76,7 @@ Ext.define('MyApp.view.Main', {
         ]
       },{
         xtype: 'task-list',
+        useCache: false,
         store: {
           storeId: 'TaskStore',
           model: 'MyApp.model.TaskListItem'

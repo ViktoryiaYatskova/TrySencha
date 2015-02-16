@@ -4,7 +4,7 @@
 Ext.define('MyApp.model.TaskListItem', {
     extend: 'Ext.data.Model',
     config: {
-      useCache: false,
+      cls: 'task-list-item',
       fields: ['done', 'name']
     }
 });

@@ -28,13 +28,14 @@ Ext.define('MyApp.view.TaskListItem', {
     ]
   },
   updateRecord: function(record){
-    var markBtn = this.child('button'),
+    var checkboxfield = this.child('checkboxfield'),
+        deleteBtn = this.child('button'),
       nameField = this.child('container');
 
-    markBtn.setRecord(record);
-    nameField.setRecord(record);
-
-    if(record && !nameField.getHtml()) {
+    if(record) {
+      deleteBtn.setRecord(record);
+      checkboxfield.setRecord(record);
+      nameField.setRecord(record);
       nameField.setHtml(record.get('name'));
     }
     this.callParent(arguments);
