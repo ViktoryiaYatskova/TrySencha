@@ -11,50 +11,32 @@ Ext.define('MyApp.view.TaskListItem', {
   ],
   config: {
     layout: 'hbox',
-    itemId: 'task-list-item',
     cls: 'task-list-item',
     items: [
       {
         xtype: 'checkboxfield',
-        itemId: 'mark-btn',
         cls: 'mark-btn',
-        bubbleEvents: ['change'],
         flex: 0
       }, {
-        xtype: 'component',
-        itemId: 'task-name',
+        xtype: 'container',
         flex: 1
       }, {
         xtype: 'button',
-        bubbleEvents: ['tap'],
-        itemId: 'delete-btn',
+        action : 'delete-task',
         cls: 'delete-btn'
       }
-    ],
-
-    control: {
-      '#mark-btn': {
-        change: function(elem, value){
-          var record = this.getRecord();
-          record.set('done', value); //using set-function causes generation of new event for checkbox
-        }
-      },
-      '#delete-btn': {
-        tap: function(elem, event){
-          event.record = this.getRecord();
-          this.parent.remove(this);
-        }
-      }
-    }
+    ]
   },
-  updateRecord: function(record, newRecord, eOpts){
-    debugger;
-    this.callParent.apply(this, Array.prototype.splice.call(arguments));
-    var markBtn = this.child('#mark-btn'), nameField = this.child('#task-name');
+  updateRecord: function(record){
+    var markBtn = this.child('button'),
+      nameField = this.child('container');
+
+    markBtn.setRecord(record);
+    nameField.setRecord(record);
 
     if(record && !nameField.getHtml()) {
       nameField.setHtml(record.get('name'));
-      markBtn.setValue(record.get('done'));
     }
+    this.callParent(arguments);
   }
 });

@@ -3,11 +3,12 @@ Ext.define('MyApp.view.Main', {
   xtype: 'main',
   requires: [
     'Ext.TitleBar',
-    'MyApp.view.TaskList',
     'Ext.field.Text',
     'Ext.Button',
     'Ext.Label',
-    'MyApp.model.TasksCount'
+    'MyApp.model.TaskCount',
+    'MyApp.model.TaskListItem',
+    'MyApp.view.TaskList'
   ],
   config: {
     layout: 'fit',
@@ -21,24 +22,23 @@ Ext.define('MyApp.view.Main', {
       items: [{
           xtype: 'textfield',
           flex: 1,
-          id: 'task-field',
           placeHolder: 'Add task...'
         },{
           xtype: 'button',
           iconCls: 'add',
           cls: 'header-round-btn',
-          id: 'add-btn',
+          action : 'add-task',
           disabled: true
         },{
           xtype: 'button',
           iconCls: 'done',
           cls: 'header-round-btn',
-          id: 'check-all-btn',
+          action: 'check-all',
           disabled: true
         },{
           xtype: 'button',
           iconCls: 'delete',
-          itemId: 'delete-all-btn',
+          action: 'delete-all',
           cls: 'header-round-btn',
           disabled: true
         }
@@ -50,25 +50,25 @@ Ext.define('MyApp.view.Main', {
 
         items:[{
             xtype: 'button',
-            itemId: 'show-all-btn',
+            action: 'show-all',
             text: 'All',
             cls: 'footer-btn',
             disabled: true
           },{
             xtype: 'button',
-            itemId: 'show-complete-btn',
+            action: 'show-complete',
             text: 'Complete',
             cls: 'footer-btn'
           },{
             xtype: 'button',
-            itemId: 'show-active-btn',
+            action: 'show-active',
             text: 'Active',
             cls: 'footer-btn'
           },{
             xtype: 'label',
-            record: Ext.create('MyApp.model.TasksCount', {count: 0}),
+            record: Ext.create('MyApp.model.TaskCount', {count: 0}),
             flex: 1,
-            id: 'active-tasks-lbl',
+            cls: 'active-tasks-lbl',
             tpl: new Ext.XTemplate([
               '<span>You have {count} active tasks</span>'
             ])
@@ -76,11 +76,10 @@ Ext.define('MyApp.view.Main', {
         ]
       },{
         xtype: 'task-list',
-        id: 'task-list',
-        store: Ext.create('Ext.data.Store', {
+        store: {
           storeId: 'TaskStore',
-          model: 'MyApp.model.TaskListItemModel'
-        })
+          model: 'MyApp.model.TaskListItem'
+        }
       }
     ]
   }

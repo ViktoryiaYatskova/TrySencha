@@ -1,7 +1,7 @@
 /**
  * Created by Viktoria on 11.02.2015.
  */
-Ext.define('MyApp.model.TasksCount', {
+Ext.define('MyApp.model.TaskCount', {
     extend: 'Ext.data.Record',
     xtype: 'task-count-record',
     config: {

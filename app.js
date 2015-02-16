@@ -17,8 +17,8 @@ Ext.application({
     'Ext.MessageBox',
     'Ext.List',
     'MyApp.view.TaskListItem',
-    'MyApp.model.TaskListItemModel',
-    'MyApp.model.TasksCount'
+    'MyApp.model.TaskListItem',
+    'MyApp.model.TaskCount'
   ],
 
   views: [
@@ -28,8 +28,8 @@ Ext.application({
   ],
 
   models: [
-    'TasksCount',
-    'TaskListItemModel'
+    'TaskCount',
+    'MyApp.model.TaskListItem'
   ],
 
   controllers: [
@@ -56,7 +56,7 @@ Ext.application({
 
   launch: function() {
     // Destroy the #appLoadingIndicator element
-    Ext.fly('appLoadingIndicator').destroy();;
+    Ext.fly('appLoadingIndicator').destroy();
 
     // Initialize the main view
     Ext.Viewport.add(Ext.create('MyApp.view.Main'));

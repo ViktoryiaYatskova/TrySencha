@@ -1,9 +1,10 @@
 /**
  * Created by Viktoria on 12.02.2015.
  */
-Ext.define('MyApp.model.TaskListItemModel', {
+Ext.define('MyApp.model.TaskListItem', {
     extend: 'Ext.data.Model',
     config: {
-        fields: ['done', 'name']
+      useCache: false,
+      fields: ['done', 'name']
     }
 });
