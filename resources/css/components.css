@@ -1,43 +1,21 @@
-/*input[type="checkbox"] {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin: auto 5px auto 0;
-  vertical-align: middle;
-
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-
-  border: 1px solid #dfdfdf;
-  border-radius: 20px;
-  background: white;
-}*/
 .mark-btn {
     width: 50px;
 }
 .mark-btn.x-field .x-field-input {
     min-width: 0;
 }
+.mark-btn .x-input-el:checked + .x-field-mask::after {
+    color: #039904;
+}
 .task-list-item {
     background-color: white;
+    border-bottom: 1px solid rgb(240, 250, 255);
 }
 .x-container .x-data-item-inner {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
-
-/*input:checked::after {
-  content: "3";
-  font-family: "Pictos";
-  font-size: 30px;
-  color: green;
-  text-align: center;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-}*/
 .delete-btn {
   display: inline-block;
   float: right;
@@ -45,7 +23,8 @@
   height: 35px;
   padding: 5px;
   margin-right: 0.2em;
-  border: 1px solid #ECD4CE;
+  overflow: visible;
+  border: 1px solid #FFEAE5;
   border-radius: 20px;
   background-size: 25px;
   background-repeat: no-repeat;
@@ -53,8 +32,10 @@
   background-color: white;
   background-image: url('../icons/delete.png');
 }
-.delete-btn:active {
-  background-color: #ECD4CE;
+.delete-btn:active,
+.delete-btn.button-pressing,
+.delete-btn.button-pressing::after {
+    background-color: #FFEAE5;
 }
 
 .done::after {

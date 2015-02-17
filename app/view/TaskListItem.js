@@ -22,6 +22,7 @@ Ext.define('MyApp.view.TaskListItem', {
         flex: 1
       }, {
         xtype: 'button',
+        pressedCls: 'button-pressing',
         action : 'delete-task',
         cls: 'delete-btn'
       }
@@ -36,7 +37,9 @@ Ext.define('MyApp.view.TaskListItem', {
       deleteBtn.setRecord(record);
       checkboxfield.setRecord(record);
       nameField.setRecord(record);
+
       nameField.setHtml(record.get('name'));
+      record.get('done')? checkboxfield.check(): checkboxfield.uncheck();
     }
     this.callParent(arguments);
   }

@@ -17,5 +17,8 @@ Ext.define('MyApp.model.TaskCount', {
     },
     setCount: function(count){
         this.set('count', count);
+    },
+    updateRecord: function(record){
+
     }
 });
